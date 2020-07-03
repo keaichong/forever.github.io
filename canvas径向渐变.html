@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body {
+        text-align: center;
+        padding-top: 20px;
+    }
+    div {
+        width: 600px;
+        height:500px;
+        margin: 0 auto; 
+    }
+    canvas {
+        box-shadow: 0 0 10px #333;
+        margin: 0 auto; 
+    }
+    </style>
+</head>
+<body onload="draw()">
+       <div>
+            <canvas id="canvas" width="600" height="500">你的浏览器不支持</canvas>
+       </div>
+        <script>
+            function draw(){
+                var canvas = document.getElementById('canvas')
+                if(canvas.getContext){
+                    //说明支持当前浏览器
+                    var ctx = canvas.getContext('2d')//画笔 上下文
+                    /***
+                     * 参数1 x1  代表第一个元的圆心
+                     * 参数2 y1
+                     * 参数3 r1 
+                     * 参数4 x2 代表第二个元的圆心
+                     * 参数5 y2
+                     * 参数6 r2
+                     * */
+                    var radial = ctx.createRadialGradient(50,50,10,50,50,30)
+                     /***
+                     *参数1 必须时0.0 ~1.0之间的数值 数值表示颜色所在的相对位置
+                     *参数2 颜色,white #fff rgb(255,255,255)
+                     * */
+                     radial.addColorStop(0,'#A7D30C')
+                     radial.addColorStop(0.9,'#019F62')
+                     radial.addColorStop(1,'rgba(1,159,98,0)')
+                     ctx.fillStyle = radial
+                     ctx.fillRect(10,10,200,200)
+                
+                }else{
+
+                }
+            }
+        </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body {
+        text-align: center;
+        padding-top: 20px;
+    }
+    div {
+        width: 600px;
+        height:500px;
+        margin: 0 auto; 
+    }
+    canvas {
+        box-shadow: 0 0 10px #333;
+        margin: 0 auto; 
+    }
+    </style>
+</head>
+<body onload="draw()">
+       <div>
+            <canvas id="canvas" width="600" height="500">你的浏览器不支持</canvas>
+       </div>
+        <script>
+            function draw(){
+                var canvas = document.getElementById('canvas')
+                if(canvas.getContext){
+                    //说明支持当前浏览器
+                    var ctx = canvas.getContext('2d')//画笔 上下文
+                    var img = new Image();
+                    img.src = 'fcz.jpg';
+                /*
+                context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+                img	规定要使用的图像、画布或视频。
+                sx	可选。开始剪切的 x 坐标位置。
+                sy	可选。开始剪切的 y 坐标位置。
+                swidth	可选。被剪切图像的宽度。
+                sheight	可选。被剪切图像的高度。
+                x	在画布上放置图像的 x 坐标位置。
+                y	在画布上放置图像的 y 坐标位置。
+                width	可选。要使用的图像的宽度。（伸展或缩小图像）
+                height	可选。要使用的图像的高度。（伸展或缩小图像）
+                */
+                    img.onload=function(){
+                        //渲染之前确保图片被加载
+                        // context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);//注意:可选参数选择一个就要全部填完
+                    //    ctx.drawImage(this,0,0,300,300,0,0,100,100)
+                       ctx.drawImage(this,0,0)
+                       ctx.clearRect(290,160,50,20);
+                       var lingrad = ctx.createLinearGradient(290,160,50,20); 
+                       lingrad.addColorStop(0,'#b7aea5')
+                       lingrad.addColorStop(0.3,'#bfb6b1')
+                       lingrad.addColorStop(0.5,'#bebbb4')
+                        lingrad.addColorStop(0.8,'#b2a9a0')
+                        lingrad.addColorStop(1,'#beb5b0')
+
+                        ctx.fillStyle = lingrad
+                        ctx.fillRect(290,160,50,20)
+                        ctx.font = 'normal normal 12px arial'
+                        ctx.strokeStyle = 'rgba(108,99,94,.9)'
+                        ctx.shadowBlur = .2 //模糊度
+                        // ctx.shadowOffsetX = 1 //偏移量
+                        // ctx.shadowOffsetY = 1
+                       ctx.strokeText('宋晨阳',300,175)
+                    }
+                    
+                }else{
+
+                }
+            }
+        </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body {
+        text-align: center;
+        padding-top: 20px;
+    }
+    div {
+        width: 600px;
+        height:500px;
+        margin: 0 auto; 
+    }
+    canvas {
+        box-shadow: 0 0 10px #333;
+        margin: 0 auto; 
+    }
+    </style>
+</head>
+<body onload="draw()">
+       <div>
+            <canvas id="canvas" width="600" height="600">你的浏览器不支持</canvas>
+            <button>开始抽奖</button>
+       </div>
+        <script>
+            function draw(){
+                var canvas = document.getElementById('canvas')
+                if(canvas.getContext){
+                    //说明支持当前浏览器
+                    var ctx = canvas.getContext('2d')//画笔 上下文
+                    var colorArr = ['blue','green','pink','red','yellow','black']
+                    var count = 6;//几等分
+                    var speed = 1;
+                    var singleAngle = 2*Math.PI / count //一份的弧度
+                    var pi =0
+                    var everyPercent =pi* Math.PI/180; //每次旋转1度(1度所对应弧度)
+                    //重新映射画布上的(0,0)位置,此时画布的(0,0)点位置画布的中心点,同时也是圆心点(300,300)
+                    ctx.translate( 300, 300 )
+                    function creat(){
+                        ctx.clearRect(0,0,canvas.width,canvas.height);
+                        ctx.rotate(everyPercent)
+                        for(var i = 0; i<count ;i++){
+                            ctx.beginPath()
+                            ctx.fillStyle= colorArr[i]
+                            ctx.strokeStyle = 'pink'
+                            ctx.moveTo(0,0)
+                            ctx.arc(0,0,200,singleAngle*i,singleAngle*(i+1))
+                            ctx.arc(0,0,30,singleAngle*(i+1),singleAngle*i,true)
+                            ctx.stroke()
+                            ctx.fill()
+                            ctx.closePath()
+                        }
+                        
+                    }
+                    // creat()
+                    function act(){
+                        ctx.save()
+                        creat()
+                        pi++
+                        everyPercent =pi* Math.PI/180//每次比上次旋转角度+1
+                        if(everyPercent == Math.PI){
+                            everyPercent = Math.PI/180
+                        }
+                        ctx.restore()
+                        window.requestAnimationFrame(act);
+                    }
+                    act()
+                
+
+                    // 让坐标系运动
+                    // function act(){
+                    //     ctx.save()
+                    //     ctx.clearRect(0,0,canvas.width,canvas.height);
+                    //     // 平移到矩形的中心
+                    //     ctx.rotate(everyPercent+= everyPercent);
+                    //     ctx.restore()
+                    //     window.requestAnimationFrame(act);          
+                    // }
+                    // act();
+                    
+                }else{
+
+                }
+            }
+        </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body {
+        text-align: center;
+        padding-top: 20px;
+    }
+    div {
+        width: 600px;
+        height:500px;
+        margin: 0 auto; 
+    }
+    canvas {
+        box-shadow: 0 0 10px #333;
+        margin: 0 auto; 
+    }
+    </style>
+</head>
+<body onload="draw()">
+       <div>
+            <canvas id="canvas" width="600" height="500">你的浏览器不支持</canvas>
+       </div>
+        <script>
+            function draw(){
+                var canvas = document.getElementById('canvas')
+                if(canvas.getContext){
+                    //说明支持当前浏览器
+                    var ctx = canvas.getContext('2d')//画笔 上下文
+                    var img = new Image();
+                    img.src = 'logo.png';
+                    //createPattern() 方法在指定的方向内重复指定的元素。
+                    // 元素可以是图片、视频，或者其他 <canvas> 元素。
+                    // 被重复的元素可用于绘制/填充矩形、圆形或线条等等。
+                    //context.createPattern(image,"repeat|repeat-x|repeat-y|no-repeat");
+                    img.onload=function(){
+                        //渲染之前确保图片被加载
+                        var ptrn = ctx.createPattern(img,'no-repeat');
+                        ctx.fillStyle = ptrn;
+                        ctx.fillRect(0,0,150,150)
+                    }
+                     /*
+                    1 font - 定义字体
+                    2 fillText(text,x,y) - 在 canvas 上绘制实心的文本
+                    3 strokeText(text,x,y) - 在 canvas 上绘制空心的文本
+                    */
+                    ctx.font = 'bold italic 130px  arial'
+                    // ctx.fillText('你好',200,200)
+                    ctx.shadowColor = 'orange'
+                    ctx.shadowBlur = 4 //模糊度
+                    ctx.shadowOffsetX =50 //偏移量
+                    ctx.shadowOffsetY = 50
+                    ctx.strokeText('你好',200,200)
+                }else{
+
+                }
+            }
+        </script>
+</body>
+</html>

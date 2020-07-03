@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body,html {
+        margin:0;
+        text-align: center;
+        padding-top: 20px;
+    }
+    div {
+        width: 600px;
+        height:500px;
+        margin: 0 auto; 
+    }
+    canvas {
+        box-shadow: 0 0 10px #333;
+        border:1px solid red;
+        margin: 0 auto; 
+    }
+    </style>
+</head>
+<body onload="draw()">
+       <div>
+            <canvas id="canvas" width="600" height="500">你的浏览器不支持</canvas>
+       </div>
+        <script>
+            function draw(){
+                var canvas = document.getElementById('canvas')
+                if(canvas.getContext){
+                    //说明支持当前浏览器
+                    var ctx = canvas.getContext('2d')//画笔 上下文
+                    /**
+                     * canvas动画原理
+                     * 1. 绘制图像
+                     * 2. 清除图像
+                     * 3. 更新位置
+                     * 4. 绘制图像
+                     * 5. 2 3 4 2 3 4
+                    */
+                    //圆形碰撞反弹 (面向对象方式)
+                    function Ball(x,y,r,speedX,speedY,color){
+                        this.x = x;
+                        this.y = y;
+                        this.r = r;
+                        this.speedX = speedX;
+                        this.speedY = speedY;
+                        this.color = color;
+                        //方法
+                        // 画圆
+                        this.draw = function () {
+                            ctx.beginPath()
+                            ctx.fillStyle = this.color
+                            ctx.arc(this.x,this.y,this.r,0,2*Math.PI)
+                            ctx.fill()
+                        }
+                        // 移动
+                        this.move = function () {
+                            this.x += this.speedX
+                            if(this.x>canvas.width-this.r){
+                                this.speedX *= -1
+                            }else if(this.x <this.r){
+                                this.speedX *= -1
+                            }
+                            this.y += this.speedY  //#endregion
+                            if(this.y>canvas.height-this.r){
+                                this.speedY *= -1
+                            }else if(this.y <this.r){
+                                this.speedY *= -1
+                            }
+                        },
+                        this.start= function () {
+                            ctx.clearRect(0,0,canvas.width,canvas.height)
+                            this.draw();
+                            this.move();
+                            //请求关键帧动画(平滑 比setInterval 更好 不会有丢帧情况)
+                            window.requestAnimationFrame(this.start);
+                        }.bind(this)
+                    }
+                    // let arr = [];
+                    for(let i = 0;i<5;i++){
+                        let colorArr = ['blue','green','pink','yellow'];
+                        let curColor =colorArr[i%colorArr.length] 
+                        let ball  = new Ball(25+i*40,25+i*40,22,2,2,curColor)
+                        // arr.push(ball)
+                        console.log(i,curColor)
+                        ball.start()
+                    }
+               
+                    // var ball = new Ball(100,100,50,2,2,'blue')
+                    // function start(){
+                    //     ctx.clearRect(0,0,canvas.width,canvas.height)
+                    //     ball.draw();
+                    //     ball.move();
+                    //      //请求关键帧动画(平滑 比setInterval 更好 不会有丢帧情况)
+                    //      window.requestAnimationFrame(start);
+                    // }
+                  
+                }else{
+
+                }
+            }
+        </script>
+</body>
+</html>

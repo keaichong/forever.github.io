@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body {
+        text-align: center;
+        padding-top: 20px;
+    }
+    canvas {
+        box-shadow: 0 0 10px #333;
+        margin: 0 auto; 
+    }
+    </style>
+</head>
+<body onload="draw()">
+        <canvas id="canvas" width="600" height="500">你的浏览器不支持</canvas>
+        <script>
+            function draw(){
+                var canvas = document.getElementById('canvas')
+                if(canvas.getContext){
+                    //说明支持当前浏览器
+                    var ctx = canvas.getContext('2d')//画笔 上下文
+                    //填充矩形
+                    ctx.fillStyle="rgb(200,0,0)"
+                    ctx.fillRect(10,10,350,350)//fillRect (x,y,width,height)
+                    // ctx.fillStyle='rgba(0,0,200,.5)'
+                    // ctx.fillRect(30,30,300,350)
+                    //描边矩形
+                    // ctx.strokeStyle = 'rgba(0,0,200,.5)'
+                    // ctx.strokeRect(30,30,300,350) 
+                    // 清除画布内容
+                    ctx.clearRect(30,30,310,310)
+                    ctx.strokeStyle = 'pink'
+                    ctx.strokeRect(40,40,290,290)
+                   
+                }else{
+
+                }
+            }
+        </script>
+</body>
+</html>

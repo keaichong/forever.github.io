@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body {
+        /* text-align: center; */
+        /* padding-top: 20px; */
+        position: relative;
+    }
+    canvas {
+        position: absolute;
+        left:0;
+        box-shadow: 0 0 10px #333;
+        /* margin: 0 auto;  */
+    }
+    </style>
+</head>
+<body onload="draw()">
+        <img class="img-fluid" src="nvren.jpg" alt="">
+        <canvas id="canvas" width="700" height="1244">你的浏览器不支持</canvas>
+        <button id="btn" style="width:50px;height:30px;text-align: center;">重写</button>
+        <button id="save" style="width:50px;height:30px;text-align: center;">保存</button>
+        <script>
+            function draw(){
+                var canvas = document.getElementById('canvas')
+                var btn = document.getElementById('btn')
+                var save = document.getElementById('save')
+                // 再图片再用canvas加一层灰色蒙版
+                if(canvas.getContext){
+                    //说明支持当前浏览器
+                    var ctx = canvas.getContext('2d')//画笔 上下文
+                    // 1. 将图片用灰色盖住
+                    // ctx.beginPath()
+                    ctx.fillStyle = 'gray';
+                    ctx.fillRect(0,0,canvas.width,canvas.height)
+                    ctx.globalCompositeOperation="destination-out"
+                    ctx.lineWidth = 50
+                    ctx.lineCap="round";
+                    canvas.onmousedown = function (e) {
+                        var ev =  e || window.event
+                        var x = ev.pageX //图片长度超出了浏览器  所以用page  不用client
+                        var y = ev.pageY
+                        console.log(x,y)
+                        ctx.beginPath()
+                        ctx.moveTo(x,y)
+                        canvas.onmousemove = function (e) {
+                            var ev = e ||window.event
+                            var x = ev.pageX
+                            var y = ev.pageY
+                            ctx.lineTo(x,y)
+                            console.log(x,y)
+                            ctx.stroke()
+                        }
+                        canvas.onmouseup = function (e) {
+                            canvas.onmousemove = null
+                            
+                        }
+                    }
+                }else{
+
+                }
+            }
+        </script>
+</body>
+</html>

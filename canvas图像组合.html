@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body,html {
+        margin:0;
+        /* text-align: center; */
+        /* padding-top: 20px; */
+    }
+    div {
+        /* width: 600px;
+        height:500px;
+        margin: 0 auto;  */
+    }
+    canvas {
+        box-shadow: 0 0 40px #333;
+        /* margin: 0 auto;  */
+    }
+    </style>
+</head>
+<body onload="draw()">
+       <div>
+            <canvas id="canvas1" width="300" height="300">你的浏览器不支持</canvas>
+            <canvas id="canvas2" width="300" height="300">你的浏览器不支持</canvas>
+            <canvas id="canvas3" width="300" height="300">你的浏览器不支持</canvas>
+            <canvas id="canvas4" width="300" height="300">你的浏览器不支持</canvas>
+       </div>
+        <script>
+            function draw(){
+                var canvas1 = document.getElementById('canvas1')
+                if(canvas1.getContext){
+                    //说明支持当前浏览器
+                    var ctx1 = canvas1.getContext('2d')//画笔 上下文
+                   
+                    ctx1.beginPath();
+                    ctx1.fillStyle = 'red'
+                    ctx1.fillRect(50,50,100,100)
+                 //图像组合
+                 /* 目标图像 就是画布已经存在的图像
+
+                    源图像  就是即将画到画布上的图像
+                 */
+                    ctx1.globalCompositeOperation="destination-over"
+                    ctx1.fillStyle = 'green'
+                    ctx1.arc(150,150,50,0,2*Math.PI)
+                    ctx1.fill()
+                }else{
+
+                }
+            }
+        </script>
+</body>
+</html>

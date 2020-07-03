@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src='./Observer.js'></script>
+    <title>Document</title>
+</head>
+<body>
+    <script>
+         var observe = {
+             fnsObj:{},
+            //  订阅方法
+            on:function(key,fn){
+                if(!observe.fnsObj[key]){
+                    observe.fnsObj[key] = []
+                }
+                console.log(observe.fnsObj[key])
+                observe.fnsObj[key].push(fn)
+            },
+            // 发布
+            emit:function(key,value){
+                if(observe.fnsObj[key].length){
+                    var fnsList = observe.fnsObj[key]
+                    for(var i =0;i<fnsList.length;i++){
+                        fnsList[i].call(this,value)
+                    }
+                }
+            },
+            //删除订阅者
+            remove:function(key){
+                for(var k in observe.fnsObj){
+                    if(k === key )delete observe.fnsObj[key]
+                }
+            }
+         }   
+            // 我们订阅了两个监听者
+            observe.on('say',function(e){
+            console.log('i can hear he say: '+e)
+            })
+            observe.on('say',function(e){
+            console.log('he say: '+e)
+            })
+            // 发布消息
+            observe.emmit("say","嘿，这里是发布者")
+            
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body {
+        text-align: center;
+        padding-top: 20px;
+    }
+    canvas {
+        box-shadow: 0 0 10px #333;
+        margin: 0 auto; 
+    }
+    </style>
+</head>
+<body onload="draw()">
+        <canvas id="canvas" width="600" height="500">你的浏览器不支持</canvas>
+        <button id="btn" style="width:50px;height:30px;text-align: center;">重写</button>
+        <button id="save" style="width:50px;height:30px;text-align: center;">保存</button>
+        <script>
+            function draw(){
+                var canvas = document.getElementById('canvas')
+                var btn = document.getElementById('btn')
+                var save = document.getElementById('save')
+               
+                if(canvas.getContext){
+                    //说明支持当前浏览器
+                    var ctx = canvas.getContext('2d')//画笔 上下文
+                    btn.onclick = function (e) {
+                        ctx.clearRect(0,0,canvas.width,canvas.height)
+                    }
+                    //鼠标事件
+                    canvas.onmousedown = function (e) {
+                        var ev =  e || window.event
+                        var x = ev.clientX-canvas.offsetLeft
+                        var y = ev.clientY-canvas.offsetTop
+                        ctx.strokeStyle = 'green'
+                        ctx.lineWidth = 6 
+                        ctx.beginPath()
+                        ctx.moveTo(x,y)
+                        canvas.onmousemove = function (e) {
+                            var ev = e ||window.event
+                            var x = ev.clientX-canvas.offsetLeft
+                            var y = ev.clientY-canvas.offsetTop
+                            ctx.lineTo(x,y)
+                            ctx.stroke()
+                        }
+                        canvas.onmouseup = function (e) {
+                            canvas.onmousemove = null
+                            
+                        }
+                    }
+                    // 移动端事件
+                    canvas.addEventListener("touchstart", function(e){    
+                        var ev =  e || window.event
+                        // 获取鼠标再画布上距离
+                        var x = ev.touches[0].clientX-canvas.offsetLeft
+                        var y = ev.touches[0].clientY-canvas.offsetTop
+                        console.log(x,y)
+                        ctx.strokeStyle = 'green'
+                        ctx.lineWidth = 6 
+                        ctx.beginPath()
+                        ctx.moveTo(x,y)
+                        function touchs(e){
+                            var ev = e ||window.event
+                            var x = ev.touches[0].clientX-canvas.offsetLeft
+                            var y = ev.touches[0].clientY-canvas.offsetTop
+                            ctx.lineTo(x,y)
+                            ctx.stroke()
+                        }
+                        canvas.addEventListener("touchmove",touchs)
+                        canvas.addEventListener("touchend", function(e){
+                            ctx.closePath();
+                            // canvas.removeEventListener("touchmove",touchs) 
+                        })
+                    });
+                }else{
+
+                }
+            }
+        </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body {
+        text-align: center;
+        padding-top: 20px;
+    }
+    div {
+        width: 600px;
+        height:500px;
+        margin: 0 auto; 
+    }
+    canvas {
+        box-shadow: 0 0 10px #333;
+        margin: 0 auto; 
+    }
+    </style>
+</head>
+<body onload="draw()">
+       <div>
+            <canvas id="canvas" width="600" height="500">你的浏览器不支持</canvas>
+       </div>
+        <script>
+            function draw(){
+                var canvas = document.getElementById('canvas')
+                if(canvas.getContext){
+                    //说明支持当前浏览器
+                    var ctx = canvas.getContext('2d')//画笔 上下文
+                    /***
+                     * 参数1 起点x1
+                     * 参数2 起点y1
+                     * 参数3 终点x2
+                     * 参数4 终点y2
+                     * */
+                    var lingrad = ctx.createLinearGradient(0,0,0,150)
+                    /***
+                     *参数1 必须时0.0 ~1.0之间的数值 数值表示颜色所在的相对位置
+                     *参数2 颜色,white #fff rgb(255,255,255)
+                     * */
+                    lingrad.addColorStop(0,'#cc6677')
+                    lingrad.addColorStop(0.5,'#fff')
+                    lingrad.addColorStop(.5,'#c6c776')
+                    lingrad.addColorStop(1,'#fff')
+                    ctx.fillStyle = lingrad
+                    ctx.fillRect( 10,10,200,200)
+                }else{
+
+                }
+            }
+        </script>
+</body>
+</html>

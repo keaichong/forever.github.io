@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body {
+        text-align: center;
+        padding-top: 20px;
+    }
+    div {
+        width: 600px;
+        height:500px;
+        margin: 0 auto; 
+    }
+    canvas {
+        box-shadow: 0 0 10px #333;
+        margin: 0 auto; 
+    }
+    </style>
+</head>
+<body onload="draw()">
+       <div>
+            <canvas id="canvas" width="600" height="500">你的浏览器不支持</canvas>
+       </div>
+        <script>
+            function draw(){
+                var canvas = document.getElementById('canvas')
+                if(canvas.getContext){
+                    //说明支持当前浏览器
+                    var ctx = canvas.getContext('2d')//画笔 上下文
+                    /**
+                     * 1 创建起始点
+                     * 2 使用画图命令画出路径
+                     * 3 把路径闭合
+                     * 4 通过描边填充绘制图形
+                    */
+
+                    /*
+                    1 font - 定义字体
+                    2 fillText(text,x,y) - 在 canvas 上绘制实心的文本
+                    3 strokeText(text,x,y) - 在 canvas 上绘制空心的文本
+                    4 arc(x,y,r,start,stop)
+                    context.arc(x,y,r,sAngle,eAngle,counterclockwise);
+                    counterclockwise表示是以逆时针方向还是顺时针方向开始绘制，如果为 true则表示逆时针，如果为 false则表示顺时针。 anticlockwise参数是可选的，默认为 false，即顺时针
+                    sAngle	起始角，以弧度计（弧的圆形的三点钟位置是 0 度）。
+                    eAngle  结束角，以弧度计。
+                    弧长等于半径的弧，其所对的圆心角就是1弧度。我们还知道，半径为r的圆，其周长为2πr
+                    */
+                    ctx.beginPath();
+                    ctx.lineWidth="6";
+                    ctx.moveTo(300,10);
+                    ctx.lineTo(500,200);
+                    ctx.lineTo(100,200);
+                    // ctx.lineTo(300,10);
+                    ctx.closePath();//关闭路径 (就不用化最后)
+                    // 填充
+                    ctx.fillStyle="green";     
+                    ctx.fill()
+                    // 描边
+                    ctx.strokeStyle="red";
+                    ctx.stroke();
+                   //开始一个新的绘制路径
+                    ctx.beginPath();
+                    //设置弧线的颜色为蓝色
+                    ctx.strokeStyle = "yellow";
+                    ctx.fill()
+                    var circle = {
+                        x : 100,    //圆心的x轴坐标值
+                        y : 100,    //圆心的y轴坐标值
+                        r : 50        //圆的半径
+                    };
+                     //沿着坐标点(100,100)为圆心、半径为50px的圆的顺时针方向绘制弧线  0.5pai 半圆
+                ctx.arc(circle.x, circle.y, circle.r, 0, 2*Math.PI , false);    
+                //按照指定的路径绘制弧线
+                ctx.fillStyle= 'pink'
+                ctx.fill()
+                ctx.stroke();
+                }else{
+
+                }
+            }
+        </script>
+</body>
+</html>
